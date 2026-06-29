@@ -6,7 +6,7 @@ Hands-on lab writeups documenting my web security learning journey.
 
 | Topic | Completed | Total |
 |-------|-----------|-------|
-| SQL Injection | 0 | 18 |
+| SQL Injection | 1 | 18 |
 | XSS | 0 | 30 |
 | Authentication | 0 | 14 |
 | IDOR | 0 | 13 |
@@ -15,8 +15,7 @@ Hands-on lab writeups documenting my web security learning journey.
 ## Labs Solved
 
 ### SQL Injection
-- coming soon
-
+Lab 1 solved
 ## Tools Used
 - Burp Suite
 - Browser DevTools
