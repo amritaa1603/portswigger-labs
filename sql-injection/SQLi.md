@@ -29,3 +29,22 @@ to confirm you control the query logic. Real fix is parameterized queries, never
 concatenation.
 
 ---
+## 2. SQL Injection Vulnerability Allowing Login Bypass
+**Category:** SQL Injection · **Difficulty:** Apprentice · **Status:** ✅ Solved
+
+**What is this?**
+The login form builds a query directly from the username and password fields, so the
+password check itself can be commented out of the query rather than guessed.
+
+**How I solved it**
+1. Tested the username field with a single quote and got a broken/different response back.
+2. Instead of guessing a password, entered `administrator'--` as the username.
+3. Left the password field as anything, since it would never actually be checked.
+4. Server treated everything after `--` as a comment, dropping the password condition entirely.
+5. Logged in directly as the administrator with no valid password needed.
+
+**What I learned**
+SQLi in a login form isn't about guessing the password — it's about rewriting the query so the
+password check never runs at all. `--` is the go-to way to comment out the rest of a query.
+
+---
