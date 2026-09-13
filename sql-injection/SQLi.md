@@ -48,3 +48,22 @@ SQLi in a login form isn't about guessing the password — it's about rewriting 
 password check never runs at all. `--` is the go-to way to comment out the rest of a query.
 
 ---
+## 3. SQL Injection UNION Attack, Determining the Number of Columns Returned by the Query
+**Category:** SQL Injection · **Difficulty:** Practitioner · **Status:** ✅ Solved
+
+**What is this?**
+Before doing a `UNION SELECT` injection to pull extra data, you need to know how many columns
+the original query returns — both sides of a `UNION` need matching column counts.
+
+**How I solved it**
+1. Started sending `ORDER BY 1--`, `ORDER BY 2--`, and so on through the category param.
+2. Kept increasing the number until the query threw an error, which told me the real count.
+3. Double-checked using `UNION SELECT NULL,NULL,NULL--` with the matching number of `NULL`s.
+4. The request went through cleanly instead of erroring, confirming 3 columns.
+
+**What I learned**
+`ORDER BY` incrementing is the fastest way to find column count, and `NULL` placeholders avoid
+type-mismatch errors messing with the result. This step is basically recon before a real
+UNION-based data extraction.
+
+---
