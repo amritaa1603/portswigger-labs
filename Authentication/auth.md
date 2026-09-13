@@ -93,3 +93,27 @@ A short code is only safe if attempts are locked down hard — pair it with a cl
 "who am I verifying" field and it becomes a full bypass.
 
 ---
+## Brute-Forcing a Stay-Logged-In Cookie
+**Category:** Authentication · **Difficulty:** Practitioner · **Status:** ✅ Solved
+
+**What is this?**
+The "remember me" cookie is just base64 of `username:md5(password)` instead of a random,
+server-issued token — meaning it can be reconstructed if you can guess the password.
+
+**How I solved it**
+1. Logged in with "stay logged in" checked and decoded my own cookie to see its structure.
+2. Confirmed the second half matched `md5(my own password)`.
+3. Took the target's known username and ran a password wordlist through Intruder.
+4. Built the cookie value as `username:md5(candidate)`, base64-encoded, for each attempt.
+5. One candidate returned an authenticated session — that was the real password.
+
+| Part | Effect |
+|---|---|
+| `username` | Plaintext, identifies account |
+| `md5(password)` | Predictable, brute-forceable |
+
+**What I learned**
+If a cookie's length matches a known hash algorithm's output, it's probably built from
+guessable inputs rather than randomly issued — and that means it's forgeable.
+
+---
