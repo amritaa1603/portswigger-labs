@@ -96,7 +96,7 @@ A short code is only safe if attempts are locked down hard — pair it with a cl
 ## Brute-Forcing a Stay-Logged-In Cookie
 **Category:** Authentication · **Difficulty:** Practitioner · **Status:** ✅ Solved
 
-**What is this?**
+**What is this??**
 The "remember me" cookie is just base64 of `username:md5(password)` instead of a random,
 server-issued token — meaning it can be reconstructed if you can guess the password.
 
