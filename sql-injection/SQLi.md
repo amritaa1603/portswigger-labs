@@ -11,7 +11,7 @@ took away from it.
 
 **What is this?**
 A product filter passes the `category` value straight into a SQL `WHERE` clause with no
-sanitization, so whatever I type becomes part of the actual query.
+sanitization, so whatever I type becomes part of the actual querys.
 
 **How I solved it**
 1. Tried a single quote (`'`) in the category param and got a database error back.
