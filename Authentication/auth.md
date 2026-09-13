@@ -117,3 +117,22 @@ If a cookie's length matches a known hash algorithm's output, it's probably buil
 guessable inputs rather than randomly issued — and that means it's forgeable.
 
 ---
+##  Broken Brute-Force Protection, IP Block
+**Category:** Authentication · **Difficulty:** Practitioner · **Status:** ✅ Solved
+
+**What is this?**
+The app locks an IP after a few failed logins, but a successful login from that same IP
+resets the failure counter — even if it's for a completely different account.
+
+**How I solved it**
+1. Failed logins on purpose until my IP got locked out, to confirm the threshold.
+2. Logged in successfully with my own account and saw the lockout counter reset.
+3. Set up a Burp Intruder pitchfork attack with two positions.
+4. Alternated one request logging into my own account correctly, then one guessing the target's password.
+5. Since my valid login kept resetting the counter, the lockout never triggered.
+6. Eventually landed on the correct password for the target account.
+
+**What I learned**
+Brute-force protection needs to check what resets the counter, not just what triggers it —
+tracking failures per account instead of per IP would've closed this off.
+
