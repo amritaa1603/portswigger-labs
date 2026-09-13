@@ -55,3 +55,22 @@ Any flow using two separate identifiers (token + username) needs to check they a
 together — otherwise you're really only validating one of them.
 
 ---
+## Username Enumeration via Subtly Different Responses
+**Category:** Authentication · **Difficulty:** Practitioner · **Status:** ✅ Solved
+
+**What is this?**
+Same idea as regular username enumeration, except the error text looks identical either way —
+the difference is hidden in something smaller, like response length.
+
+**How I solved it**
+1. Ran the username wordlist through Intruder with a fixed wrong password.
+2. Sorted results by response length instead of reading the error text.
+3. Found one entry a few bytes different from all the rest — that was the valid username.
+4. Repeated the same process with a password wordlist against that username.
+5. Sorted by length again and found the successful login attempt.
+
+**What I learned**
+"Looks the same" isn't "is the same" — always check raw response length and status code, not
+just what the error message says on screen.
+
+---
