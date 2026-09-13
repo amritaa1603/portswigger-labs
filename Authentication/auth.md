@@ -74,3 +74,22 @@ the difference is hidden in something smaller, like response length.
 just what the error message says on screen.
 
 ---
+## 2FA Broken Logic
+**Category:** Authentication · **Difficulty:** Practitioner · **Status:** ✅ Solved
+
+**What is this?**
+The 2FA verification step trusts a client-supplied field to decide whose code is being
+checked, and doesn't rate-limit code attempts either.
+
+**How I solved it**
+1. Logged in with my own account and reached the 2FA page with my username pre-filled.
+2. Intercepted the request and swapped that field to the target's username.
+3. Sent the request to Intruder and brute-forced the 4-digit code field.
+4. Since there was no lockout, ran through the full numeric range.
+5. On the correct code, got logged in as the target instead of myself.
+
+**What I learned**
+A short code is only safe if attempts are locked down hard — pair it with a client-controlled
+"who am I verifying" field and it becomes a full bypass.
+
+---
