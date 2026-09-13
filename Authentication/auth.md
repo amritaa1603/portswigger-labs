@@ -36,3 +36,22 @@ server-side whether that step was completed before letting you into the account.
 a page in the flow, skipping it skips the whole check.
 
 ---
+## Password Reset Broken Logic
+**Category:** Authentication · **Difficulty:** Apprentice · **Status:** ✅ Solved
+
+**What is this?**
+The password reset link has a token and a username field, but the two aren't properly tied
+together server-side — so a valid token from one account can be reused for another.
+
+**How I solved it**
+1. Triggered a password reset for my own account to get a working, valid token.
+2. Intercepted the final reset request in Burp before submitting it.
+3. Kept my own valid token but changed the `username` field to the target user.
+4. Set a new password of my choosing and sent the request.
+5. Server accepted it and reset the target's password instead of mine.
+
+**What I learned**
+Any flow using two separate identifiers (token + username) needs to check they actually belong
+together — otherwise you're really only validating one of them.
+
+---
