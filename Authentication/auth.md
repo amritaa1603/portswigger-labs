@@ -18,3 +18,21 @@ Error messages don't need to say "user exists" directly — a different response
 wording is enough to leak it. Fix is making both failure cases return the exact same response.
 
 ---
+## 2FA Simple Bypass
+**Category:** Authentication · **Difficulty:** Apprentice · **Status:** ✅ Solved
+
+**What is this?**
+After a correct password, the app sends you to a 2FA code page — but it doesn't actually check
+server-side whether that step was completed before letting you into the account.
+
+**How I solved it**
+1. Logged in with the target user's known username and password.
+2. Got redirected to the 2FA code entry page as expected.
+3. Instead of entering a code, navigated straight to /my-account manually.
+4. The page loaded normally, no code check enforced at all.
+
+**What I learned**
+2FA is only real if the server tracks "has this session actually passed step 2" — if it's just
+a page in the flow, skipping it skips the whole check.
+
+---
