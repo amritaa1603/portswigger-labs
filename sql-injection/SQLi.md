@@ -6,7 +6,7 @@ took away from it.
 
 ---
 
-## 1. SQL Injection Vulnerability in WHERE Clause Allowing Retrieval of Hidden Data
+## SQL Injection Vulnerability in WHERE Clause Allowing Retrieval of Hidden Data
 **Category:** SQL Injection · **Difficulty:** Apprentice · **Status:** ✅ Solved
 
 **What is this?**
@@ -29,7 +29,7 @@ to confirm you control the query logic. Real fix is parameterized queries, never
 concatenation.
 
 ---
-## 2. SQL Injection Vulnerability Allowing Login Bypass
+## SQL Injection Vulnerability Allowing Login Bypass
 **Category:** SQL Injection · **Difficulty:** Apprentice · **Status:** ✅ Solved
 
 **What is this?**
