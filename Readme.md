@@ -11,6 +11,7 @@ Hands-on lab writeups documenting my web security learning journey.
 | Authentication | 7 | 14 |
 | IDOR | 0 | 13 |
 | CSRF | 0 | 4 |
+|Access-control| 1 | 13 |
 
 ## Labs Solved
 
