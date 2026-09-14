@@ -9,9 +9,9 @@ Hands-on lab writeups documenting my web security learning journey.
 | SQL Injection | 3 | 18 |
 | XSS | 0 | 30 |
 | Authentication | 7 | 14 |
+| Access Control | 6 | 13 |
 | IDOR | 0 | 13 |
 | CSRF | 0 | 4 |
-|Access-control| 1 | 13 |
 
 ## Labs Solved
 
@@ -29,7 +29,15 @@ Hands-on lab writeups documenting my web security learning journey.
 - Brute-forcing a stay-logged-in cookie
 - Broken brute-force protection, IP block
 
+### Access Control
+- Unprotected admin functionality
+- Unprotected admin functionality with unpredictable URL
+- User role controlled by request parameter
+- User role can be modified in user profile
+- User ID controlled by request parameter
+- User ID controlled by request parameter, with unpredictable user IDs
 
+Full writeups: [all-labs-writeups.md](all-labs-writeups.md)
 
 ## Tools Used
 - Burp Suite
