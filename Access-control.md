@@ -82,3 +82,53 @@ The account page loads user data based on an `id` parameter in the URL, and the 
 This is a textbook IDOR — any time an ID in a URL or parameter controls which record you see, the server needs to verify that record actually belongs to the requester, not just that the ID is valid.
  
 ---
+## User ID Controlled by Request Parameter, with Unpredictable User IDs
+**Category:** Access Control · **Difficulty:** Apprentice · **Status:** ✅ Solved
+ 
+**What is this?**
+Same IDOR pattern as before, except this time the user IDs are long random-looking values (like GUIDs) instead of simple numbers — so guessing one isn't realistic, the ID has to be found somewhere.
+ 
+**How I solved it**
+1. Confirmed the account page still worked the same way — whatever ID was in the URL decided whose data loaded.
+2. Since brute-forcing a GUID wasn't practical, looked elsewhere on the site for a leaked ID.
+3. Found the target user's ID exposed in another part of the app (a blog comment/author link) that wasn't protected.
+4. Copied that ID into the account page's `id` parameter.
+5. Page loaded the target user's data successfully.
+**What I learned**
+Making an identifier unpredictable only helps if it's never exposed anywhere else — one leaky endpoint (comments, avatars, public profile links) is enough to defeat the whole "unguessable ID" protection.
+ 
+---
+ 
+##  User ID Controlled by Request Parameter with Data Leakage in Redirect
+**Category:** Access Control · **Difficulty:** Apprentice · **Status:** ✅ Solved
+ 
+**What is this?**
+Accessing another user's `id` correctly triggers a redirect to the login page (so it looks
+protected), but the actual response body sent along with that redirect still contains the
+target user's sensitive data before the browser ever follows it.
+ 
+**How I solved it**
+1. Logged in and grabbed a valid session cookie/request for the account page.
+2. Sent a request with the `id` parameter swapped to the target user through Burp Repeater instead of a normal browser.
+3. Got back a 302 redirect response to `/login`, which a browser would normally just follow silently.
+4. Looked at the actual body of that 302 response instead of following it.
+5. Found the target user's sensitive info (like their API key) sitting right there in the redirect response body.
+**What I learned**
+A redirect isn't the same as "access denied" — the server had already rendered the page and put sensitive data in the response before deciding to redirect. Anyone using a raw HTTP client (not a browser) can just read that body directly.
+ 
+---
+ 
+##  User ID Controlled by Request Parameter with Password Disclosure
+**Category:** Access Control · **Difficulty:** Apprentice · **Status:** ✅ Solved
+ 
+**What is this?**
+The account page for another user loads with a pre-filled password field in the page's HTML — meant to be hidden/masked in the UI, but the actual value is sitting in the raw response.
+ 
+**How I solved it**
+1. Swapped the `id` parameter in the account page URL to the target user, same as the earlier IDOR labs.
+2. Instead of just looking at the rendered page, viewed the raw HTML response.
+3. Found an input field (something like `current-password`) that had the target's actual password pre-filled as its value.
+4. Copied that password out of the HTML source.
+5. Logged in as the target user using the leaked password to fully solve the lab.
+**What I learned**
+A masked/hidden input on screen only hides the value visually — the actual HTML sent to the browser can still contain the real data in plaintext. Never pre-fill sensitive fields server-side unless the value is meant to be exposed.
